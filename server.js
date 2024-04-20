@@ -3,6 +3,7 @@ const Todo = require("./model/todo");
 const headers = require("./headers");
 const handleError = require("./handleError");
 const handleSuccess = require("./handleSuccess");
+const getTodo = require("./getTodo");
 const postTodo = require("./postTodo");
 
 const requestListener = (req, res) => {
@@ -14,6 +15,7 @@ const requestListener = (req, res) => {
 
   if (req.url == "/todos" && req.method == "GET") {
     // getTodo.js
+    getTodos(req, res);
   } else if (req.url == "/todos" && req.method == "POST") {
     // postTodo.js
     req.on("end", () => postTodo(res, body));
