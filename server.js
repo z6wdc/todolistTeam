@@ -12,7 +12,7 @@ const connectionString = process.env.DATABASE.replace(
   "<password>", 
   process.env.DATABASE_PASSWORD ??= ""
 );
-mosngooses
+mongoose
   .connect(connectionString) 
   .then(() => { console.log("資料庫連線成功"); })
   
