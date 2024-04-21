@@ -6,6 +6,7 @@ const handleError = require("./handleError");
 const handleSuccess = require("./handleSuccess");
 const getTodo = require("./getTodo");
 const postTodo = require("./postTodo");
+const patchTodo = require("./patchTodo");
 
 dotenv.config({ path: "./.env" });
 const connectionString = process.env.DATABASE.replace(
@@ -35,6 +36,8 @@ const requestListener = (req, res) => {
     // deleteTodo.js
   } else if (req.url.startsWith("/todos/") && req.method == "PATCH") {
     // patchTodo.js
+    req.on("end", () => patchTodo({ body, req, res }));
+    
   } else if (req.method == "OPTIONS") {
     res.writeHead(200, headers);
     res.end();
