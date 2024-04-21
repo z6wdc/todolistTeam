@@ -15,3 +15,18 @@
 ```
 feature/get-todo
 ```
+
+### .env 範例
+
+範例一
+
+```
+DATABASE=mongodb://127.0.0.1:27017/db
+```
+
+範例二
+
+```
+DATABASE=mongodb://username:<password>@host:port/db?options...  # <password> 照著打，程式執行時會被下者取代
+DATABASE_PASSWORD=my_password
+```
