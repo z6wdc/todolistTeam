@@ -5,6 +5,7 @@ const handleError = require("./handleError");
 const handleSuccess = require("./handleSuccess");
 const getTodo = require("./getTodo");
 const postTodo = require("./postTodo");
+const patchTodo = require("./patchTodo");
 
 const requestListener = (req, res) => {
   let body = "";
@@ -25,6 +26,9 @@ const requestListener = (req, res) => {
     // deleteTodo.js
   } else if (req.url.startsWith("/todos/") && req.method == "PATCH") {
     // patchTodo.js
+    req.on("end", () => patchTodo({ body, req, res }));
+    //req.on('end', () => PostsControllers.createdPosts({ body, req, res }));
+
   } else if (req.method == "OPTIONS") {
     res.writeHead(200, headers);
     res.end();
