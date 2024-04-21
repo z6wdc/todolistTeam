@@ -1,4 +1,5 @@
 const http = require("http");
+const dotenv = require("dotenv");
 const Todo = require("./model/todo");
 const headers = require("./headers");
 const handleError = require("./handleError");
@@ -6,6 +7,15 @@ const handleSuccess = require("./handleSuccess");
 const getTodo = require("./getTodo");
 const postTodo = require("./postTodo");
 
+dotenv.config({ path: "./.env" });
+const connectionString = process.env.DATABASE.replace(
+  "<password>", 
+  process.env.DATABASE_PASSWORD ??= ""
+);
+mosngooses
+  .connect(connectionString) 
+  .then(() => { console.log("資料庫連線成功"); })
+  
 const requestListener = (req, res) => {
   let body = "";
 
