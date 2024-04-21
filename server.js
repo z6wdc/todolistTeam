@@ -27,8 +27,7 @@ const requestListener = (req, res) => {
   } else if (req.url.startsWith("/todos/") && req.method == "PATCH") {
     // patchTodo.js
     req.on("end", () => patchTodo({ body, req, res }));
-    //req.on('end', () => PostsControllers.createdPosts({ body, req, res }));
-
+    
   } else if (req.method == "OPTIONS") {
     res.writeHead(200, headers);
     res.end();
