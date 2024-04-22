@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 const Todo = require("./model/todo");
 const headers = require("./headers");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const handleError = require("./handleError");
 const handleSuccess = require("./handleSuccess");
 const getTodo = require("./getTodo");
@@ -29,7 +28,7 @@ const requestListener = (req, res) => {
 
   if (req.url == "/todos" && req.method == "GET") {
     // getTodo.js
-    getTodos(req, res);
+    getTodo(req, res);
   } else if (req.url == "/todos" && req.method == "POST") {
     // postTodo.js
     req.on("end", () => postTodo(res, body));
