@@ -2,11 +2,14 @@ const http = require("http");
 const dotenv = require("dotenv");
 const Todo = require("./model/todo");
 const headers = require("./headers");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const handleError = require("./handleError");
 const handleSuccess = require("./handleSuccess");
 const getTodo = require("./getTodo");
 const postTodo = require("./postTodo");
 const patchTodo = require("./patchTodo");
+const deleteTodo = require("./deleteTodo");
 
 dotenv.config({ path: "./.env" });
 const connectionString = process.env.DATABASE.replace(
@@ -34,6 +37,7 @@ const requestListener = (req, res) => {
     // deleteTodo.js
   } else if (req.url.startsWith("/todos/") && req.method == "DELETE") {
     // deleteTodo.js
+    deleteTodo(res, req);
   } else if (req.url.startsWith("/todos/") && req.method == "PATCH") {
     // patchTodo.js
     req.on("end", () => patchTodo({ body, req, res }));
