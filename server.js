@@ -35,6 +35,7 @@ const requestListener = (req, res) => {
     req.on("end", () => postTodo(res, body));
   } else if (req.url == "/todos" && req.method == "DELETE") {
     // deleteTodo.js
+    deleteTodo(res);
   } else if (req.url.startsWith("/todos/") && req.method == "DELETE") {
     // deleteTodo.js
     deleteTodo(res, req);
