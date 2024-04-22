@@ -29,7 +29,7 @@ const requestListener = (req, res) => {
 
   if (req.url == "/todos" && req.method == "GET") {
     // getTodo.js
-    getTodos(req, res);
+    getTodo(req, res);
   } else if (req.url == "/todos" && req.method == "POST") {
     // postTodo.js
     req.on("end", () => postTodo(res, body));
