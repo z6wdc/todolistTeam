@@ -1,24 +1,25 @@
 const http = require("http");
+const dotenv = require("dotenv");
 const Todo = require("./model/todo");
 const headers = require("./headers");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const handleError = require("./handleError");
 const handleSuccess = require("./handleSuccess");
+const getTodo = require("./getTodo");
 const postTodo = require("./postTodo");
+const patchTodo = require("./patchTodo");
 const deleteTodo = require("./deleteTodo");
 
-dotenv.config({ path: "./config.env" });
-const DB = process.env.DATABASE.replace("<password>", process.env.DATABASE_PASSWORD);
+dotenv.config({ path: "./.env" });
+const connectionString = process.env.DATABASE.replace(
+  "<password>", 
+  process.env.DATABASE_PASSWORD ??= ""
+);
 mongoose
-  .connect(DB) // 連線資料庫
-  .then(() => {
-    console.log("資料庫連線成功");
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
+  .connect(connectionString) 
+  .then(() => { console.log("資料庫連線成功"); })
+  
 const requestListener = (req, res) => {
   let body = "";
 
@@ -28,6 +29,7 @@ const requestListener = (req, res) => {
 
   if (req.url == "/todos" && req.method == "GET") {
     // getTodo.js
+    getTodos(req, res);
   } else if (req.url == "/todos" && req.method == "POST") {
     // postTodo.js
     req.on("end", () => postTodo(res, body));
@@ -38,6 +40,8 @@ const requestListener = (req, res) => {
     deleteTodo(res, req);
   } else if (req.url.startsWith("/todos/") && req.method == "PATCH") {
     // patchTodo.js
+    req.on("end", () => patchTodo({ body, req, res }));
+    
   } else if (req.method == "OPTIONS") {
     res.writeHead(200, headers);
     res.end();
