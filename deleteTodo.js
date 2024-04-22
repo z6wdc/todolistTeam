@@ -5,6 +5,12 @@ const handleError = require("./handleError");
 async function deleteTodo(res, req = null) {
   if(!req){
     //刪除全部
+    try {
+      const todos = await Todos.deleteMany({});
+      successHandle(res, todos);
+    } catch(error) {
+      handleError(res, error);
+    }
   } 
   else{
     //刪除單一
