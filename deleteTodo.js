@@ -7,7 +7,7 @@ async function deleteTodo(res, req = null) {
     //刪除全部
     try {
       const todos = await Todos.deleteMany({});
-      successHandle(res, todos);
+      handleSuccess(res, todos);
     } catch(error) {
       handleError(res, error);
     }
