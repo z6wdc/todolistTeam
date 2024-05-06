@@ -4,18 +4,23 @@ const Todo = require('./model/todo');
 
 const patchTodo = async ({ body, req, res }) => {
     try {
-        const todo = JSON.parse(body).title; //AS POST
+        const todo = JSON.parse(body); //AS POST
         const id = req.url.split('/').pop(); //AS DELETE{id}
-        const index = Todo.findIndex(element => element.id == id); //AS DELETE{id}
-      
-      if(todo !== undefined && index !== -1){
+        //更新單筆
+        if(todo.title !== undefined ) {   
+          //option開啟new 可回傳修改成功的資料、開啟runValidators 作更新資料的驗證
+          const result = await Todo.findByIdAndUpdate(id,todo,{new: true, runValidators: true});
+          if(result !== null){
+            handleSuccess(res, result);
+          }
+          else{
+            handleError(res, {'message' : '查無此ID'});
+          } 
 
-        const result = await Todo.findByIdAndUpdate(id,todo); //更新單筆
-        handleSuccess(res, result);
- 
         }else{
-            handleError(res, error);
-        }
+          handleError(res, { "message": "欄位填寫錯誤"});
+        }  
+    
     } catch (error) {
       handleError(res, error);
     }
